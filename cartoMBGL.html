@@ -1,0 +1,126 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>carto-mapboxgl-demo</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.26.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {
+            margin: 0;
+            padding:0;
+        }
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+  </head>
+
+  <body>
+    <div id='map'></div>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.26.0/mapbox-gl.js'></script>
+    <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.core.js"></script>
+    <script>
+
+      //initialize MapboxGL map
+      mapboxgl.accessToken = 'pk.eyJ1IjoiY3dob25nbnljIiwiYSI6ImNpczF1MXdrdjA4MXcycXA4ZGtyN2x5YXIifQ.3HGyME8tBs6BnljzUVIt4Q';
+
+      var map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/mapbox/light-v9',
+          zoom: 1,
+          center: [0,20]
+      });
+
+      map.addControl(new mapboxgl.NavigationControl());
+
+
+
+      this.map.on('style.load', function() {
+        //this is id of the map in my carto account.  You can see that it is similar to the id shown in the url of the public map: https://cwhong.carto.com/viz/36dba776-9746-11e6-9d0c-0e05a8b3e3d7/public_map
+
+        //When you create a public map based on private data, you are actually creating a 'named map' in Carto.  You can actually build a z/x/y tile template directly from a named map's name, you don't need to 'initialize' the map
+
+        //This is the same maps template that would generate a raster tile, but it uses .mvt instead of .png.  Go ahead, load 'https://cwhong.carto.com/api/v1/map/named/tpl_36dba776_9746_11e6_9d0c_0e05a8b3e3d7/mapnik/0/0/0.png' and see the equivalent raster tile!
+
+
+        var mapName = 'tpl_36dba776_9746_11e6_9d0c_0e05a8b3e3d7'
+        var tiles = [
+            'https://cwhong.carto.com/api/v1/map/named/' + mapName + '/mapnik/{z}/{x}/{y}.mvt'
+        ]
+
+        //add a mapboxGL source
+        map.addSource("points", {
+          "type": "vector",
+          "tiles": tiles
+        })
+
+        //add a layer based on the source that was just added
+        map.addLayer({
+          "id": "points",
+          "source": 'points',
+          "source-layer": "layer0",
+          "type": "circle",
+          "paint": {
+            "circle-radius": {
+              "stops": [
+                [0,1],
+                [8,8]
+              ]
+            },
+            "circle-color": {
+                property: 'mag',
+                stops: [
+                    [0, '#eff3ff'],
+                    [1, '#c6dbef'],
+                    [2, '#9ecae1'],
+                    [3, '#6baed6'],
+                    [4, '#4292c6'],
+                    [5, '#2171b5'],
+                    [6, '#084594']
+                ]
+            },
+            "circle-opacity": 0.75
+          }
+        })
+
+        //add a popup
+
+        var popup = new mapboxgl.Popup({
+          closeButton: false,
+          closeOnClick: false
+        })
+
+        map.on('mousemove', function(e) {
+          var features = map.queryRenderedFeatures(e.point, { layers: ['points'] })
+          // Change the cursor style as a UI indicator.
+          map.getCanvas().style.cursor = (features.length) ? 'pointer' : ''
+
+          if (!features.length) {
+              popup.remove()
+              return
+          }
+
+          var feature = features[0]
+
+
+          var content = 'Place: ' + feature.properties.place + '<br/>'
+          content += 'Time: ' + feature.properties.time + '<br/>'
+          content += 'Magnitude: ' + feature.properties.mag + '<br/>'
+          content += 'Depth: ' + feature.properties.depth + '<br/>'
+
+          // Populate the popup and set its coordinates
+          // based on the feature found.
+          popup.setLngLat(feature.geometry.coordinates)
+              .setHTML(content)
+              .addTo(map)
+        })
+      })
+
+    </script>
+  </body>
+</html>
