@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+-<!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8' />
@@ -18,33 +18,36 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3RhdWFqIiwiYSI6ImNpZWltdGw2ZTAwbDZzcm0zYnR0MDg4NTEifQ.tGWe2ieN2K04CfGKjsOR4Q';
 var map = new mapboxgl.Map({
     container: 'map',
-    style: 'mapbox://styles/mapbox/dark-v9',
+    style: 'mapbox://styles/mapbox/outdoors-v9',
     center: [-82.927033, 40.185561],
     zoom: 15
 });
-
 map.on('load', function () {
-
     map.addLayer({
  "id": "Parcels",
-        "type": "Polygon",
+        "type": "line",
         "source": {
             "type": "geojson",
-<<<<<<< HEAD
             "data": "https://services1.arcgis.com/OwiQO3QpAXsZqKvZ/arcgis/rest/services/Enriched_DelcoGIS/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=&returnHiddenFields=false&returnGeometry=true&returnCentroid=false&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=pgeojson"
-=======
-            "data": "https://services1.arcgis.com/OwiQO3QpAXsZqKvZ/arcgis/rest/services/Enriched_DelcoGIS/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=&returnHiddenFields=false&returnGeometry=true&returnCentroid=false&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=pgeojson"
->>>>>>> origin/master
               },
-
         "layout": {},
         "paint": {
-          'fill-color': '#088',
-          'fill-opacity': 0.8
+           "line-color": "#888",
+           "line-width": .5
         }
-
+    });
+  map.addLayer({
+        "id": "Polygons",
+        "type": "fill",
+        "source": "Parcels",
+        "paint": {
+            "fill-color": "#888888",
+            "fill-opacity": 0.1
+        },
+        "filter": ["==", "$type", "Polygon"]
     });
 });
+  map.addControl(new mapboxgl.GeolocateControl());
 </script>
 
 </body>
