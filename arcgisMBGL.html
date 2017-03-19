@@ -48,7 +48,11 @@ map.on('load', function () {
         "filter": ["==", "$type", "Polygon"]
     });
 });
-  map.addControl(new mapboxgl.GeolocateControl());
+  map.addControl(new mapboxgl.GeolocateControl(
+    positionOptions:{
+      enableHighAccuracy: true
+    }
+  ));
 </script>
 
 </body>
