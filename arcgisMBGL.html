@@ -27,7 +27,7 @@ map.on('load', function () {
 
     map.addLayer({
  "id": "Parcels",
-        "type": "fill",
+        "type": "line",
         "source": {
             "type": "geojson",
             "data": "https://services1.arcgis.com/OwiQO3QpAXsZqKvZ/arcgis/rest/services/Enriched_DelcoGIS/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=0.0&units=esriSRUnit_Meter&returnGeodetic=false&outFields=&returnHiddenFields=false&returnGeometry=true&returnCentroid=false&multipatchOption=xyFootprint&maxAllowableOffset=&geometryPrecision=&outSR=4326&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&sqlFormat=none&f=pgeojson"
@@ -35,8 +35,6 @@ map.on('load', function () {
 
         "layout": {},
         "paint": {
-           "fill-color": "#088",
-           "fill-opacity": 0.8,
            "line-color": "#888",
            "line-width": 8
 
