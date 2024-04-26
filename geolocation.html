@@ -17,7 +17,7 @@
             var altitude = position.coords.altitude;
             var accuracy = position.coords.accuracy;
 
-            var floor = inferFloorLevel(altitude);
+            var floor = position.coords.floor;
 
             alert("Latitude: " + latitude + "\nLongitude: " + longitude + "\nAltitude: " + altitude + " meters\nFloor: " + floor + "\nAccuracy: " + accuracy + " meters");
         }
