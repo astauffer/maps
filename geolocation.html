@@ -16,26 +16,11 @@
             var longitude = position.coords.longitude;
             var altitude = position.coords.altitude;
             var accuracy = position.coords.accuracy;
-
             var floor = position.coords.floor;
 
             alert("Latitude: " + latitude + "\nLongitude: " + longitude + "\nAltitude: " + altitude + " meters\nFloor: " + floor + "\nAccuracy: " + accuracy + " meters");
         }
 
-        function inferFloorLevel(altitude) {
-            // Example logic to infer floor level based on altitude
-            // This is a simplified example and may not work accurately in all scenarios
-            // You may need to adjust the threshold values based on your specific environment
-            if (altitude < -3) {
-                return -1; // Basement
-            } else if (altitude < 3) {
-                return 0; // Ground floor
-            } else if (altitude < 10) {
-                return Math.floor(altitude / 3); // Assume each floor is 3 meters high
-            } else {
-                return Math.floor(altitude / 3); // Assume each floor is 3 meters high
-            }
-        }
 
         function showError(error) {
             switch(error.code) {
