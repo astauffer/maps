@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Indoor Positioning</title>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var altitude = position.coords.altitude;
+            var accuracy = position.coords.accuracy;
+
+            var floor = inferFloorLevel(altitude);
+
+            alert("Latitude: " + latitude + "\nLongitude: " + longitude + "\nAltitude: " + altitude + " meters\nFloor: " + floor + "\nAccuracy: " + accuracy + " meters");
+        }
+
+        function inferFloorLevel(altitude) {
+            // Example logic to infer floor level based on altitude
+            // This is a simplified example and may not work accurately in all scenarios
+            // You may need to adjust the threshold values based on your specific environment
+            if (altitude < -3) {
+                return -1; // Basement
+            } else if (altitude < 3) {
+                return 0; // Ground floor
+            } else if (altitude < 10) {
+                return Math.floor(altitude / 3); // Assume each floor is 3 meters high
+            } else {
+                return Math.floor(altitude / 3); // Assume each floor is 3 meters high
+            }
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Indoor Positioning</h1>
+    <button onclick="getLocation()">Get Location</button>
+</body>
+</html>
