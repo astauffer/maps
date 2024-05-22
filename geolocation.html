@@ -1,47 +1,21 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
-    <title>Indoor Positioning</title>
-    <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
-
-        function showPosition(position) {
-            var latitude = position.coords.latitude;
-            var longitude = position.coords.longitude;
-            var altitude = position.coords.altitude;
-            var accuracy = position.coords.accuracy;
-            var floor = position.coords.altitudeAccuracy;
-
-            alert("Latitude: " + latitude + "\nLongitude: " + longitude + "\nAltitude: " + altitude + " meters\nFloor: " + floor + "\nAccuracy: " + accuracy + " meters");
-        }
-
-
-        function showError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    alert("User denied the request for Geolocation.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("Location information is unavailable.");
-                    break;
-                case error.TIMEOUT:
-                    alert("The request to get user location timed out.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    alert("An unknown error occurred.");
-                    break;
-            }
-        }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="theme-color" content="#0B4268" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <title>Navv - Location reporter</title>
+  <script type="module" crossorigin src="/assets/index-xs0RbKuU.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CFjW48Fh.css">
 </head>
+
 <body>
-    <h1>Indoor Positioning</h1>
-    <button onclick="getLocation()">Get Location</button>
+  <div id="root"></div>
 </body>
+
 </html>
